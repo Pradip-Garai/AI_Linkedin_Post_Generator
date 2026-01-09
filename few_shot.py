@@ -2,7 +2,7 @@ import json
 import pandas as pd
 
 class FewShotPosts:
-    def __init__(self, file_path="Data/preprocessed_post.json"):
+    def __init__(self, file_path="DATA/preprocessed_post.json"):
         self.df = None
         self.unqiue_tags = None
         self.load_post(file_path)
