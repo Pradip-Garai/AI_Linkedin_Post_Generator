@@ -4,3 +4,4 @@ langchain-groq
 langchain
 pandas
 bcrypt
+mongoengine
