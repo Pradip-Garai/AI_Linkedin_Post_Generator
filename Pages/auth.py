@@ -70,23 +70,30 @@ def signup_ui():
                 if password != confirm_password:
                     st.error("Password Missmatched")
                 else:
-                    password2=password.encode('utf-8')
-                    hashed_password = bcrypt.hashpw(password2, bcrypt.gensalt())
-                    user = Users(
-                        name=names,
-                        email=emails,
-                        password=hashed_password,
-                        gender = genders,
-                        occupation = occupations
-                    )
-                    user.save()
-                    Otp = random.randint(1000, 9999)
-                    st.session_state.otp = Otp
-                    st.session_state.email = emails
-                    send_otp_email(emails,Otp)
-                    st.session_state.page = "otp_ckeck"
-                    st.rerun()
-
+                        # prevent duplicate registration
+                        existing = Users.objects(email=emails).first()
+                        if existing:
+                            st.error("This email is already registered. Please log in or use a different email.")
+                        else:
+                            try:
+                                password2 = password.encode('utf-8')
+                                hashed_password = bcrypt.hashpw(password2, bcrypt.gensalt())
+                                user = Users(
+                                    name=names,
+                                    email=emails,
+                                    password=hashed_password,
+                                    gender=genders,
+                                    occupation=occupations
+                                )
+                                user.save()
+                                Otp = random.randint(1000, 9999)
+                                st.session_state.otp = Otp
+                                st.session_state.email = emails
+                                send_otp_email(emails, Otp)
+                                st.session_state.page = "otp_ckeck"
+                                st.rerun()
+                            except Exception as e:
+                                st.error(f"Failed to create user: {e}")
 
     with btn2:
         if st.button("<- Back to Login"):

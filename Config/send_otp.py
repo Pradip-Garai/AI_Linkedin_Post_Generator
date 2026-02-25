@@ -5,8 +5,8 @@ from email.mime.multipart import MIMEMultipart
 def send_otp_email(receiver_email,otp):
     
     # Email credentialss
-    sender_email = "studytimes116@gmail.com"
-    app_password = "iujh ojvd cnkz lkkw"
+    sender_email = "pradipgarai441@gmail.com"
+    app_password = "qsoy uzlo tkjm ppvy"
     
     # Create the email
     msg = MIMEMultipart("alternative")
